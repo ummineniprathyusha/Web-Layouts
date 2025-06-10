@@ -11,6 +11,7 @@ import {
   MissionVisionLayout,
   TeamLayout,
   CtaLayout,
+  ServiceCard
 } from '../layouts';
 
 import FullPageListLayout from '../layouts/FullPageListLayout';
@@ -21,6 +22,7 @@ const LayoutComponents = {
   list: ListLayout,
   testimonial: TestimonialLayout,
   testimonial1: TestimonialLayout1,
+  service: ServiceCard,
   hero: HeroLayout,
   missionVision: MissionVisionLayout,
   team: TeamLayout,

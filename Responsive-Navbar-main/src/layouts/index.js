@@ -4,7 +4,7 @@ export { default as ListLayout } from './ListLayout';
 
 export { default as TestimonialLayout} from './TestimonialLayout';
 export { default as TestimonialLayout1} from './TestimonialLayout1';
-
+export { default as ServiceCard} from './ServiceCard';
 
 
 

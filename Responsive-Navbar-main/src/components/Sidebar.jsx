@@ -720,6 +720,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { FaPlus, FaEdit, FaThLarge, FaCog } from 'react-icons/fa';
 import { useNavigation } from '../context/NavigationContext';
 
+
 // --- IMPORTANT: Layout Components are NOT rendered directly in sidebar now ---
 // We still need their mapping to know what to display on the main canvas
 // You might still import them if your `setLayoutForPage` logic needs them directly.
@@ -731,6 +732,7 @@ import {
   ListLayout,
   TestimonialLayout,
   TestimonialLayout1,
+  ServiceCard,
   
   HeroLayout,
   MissionVisionLayout,
@@ -746,6 +748,7 @@ const LayoutComponents = {
   list: ListLayout,
   testimonial: TestimonialLayout,
   testimonial1: TestimonialLayout1,
+  service: ServiceCard,
   hero: HeroLayout,
   missionVision: MissionVisionLayout,
   team: TeamLayout,
