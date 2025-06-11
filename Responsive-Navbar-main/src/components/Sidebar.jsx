@@ -745,6 +745,7 @@ import {
   BasicDetailsForm2,
   BasicDetailsForm3,
   BasicDetailsForm4,
+  Termsandconditions,
 } from '../layouts';
 import ContactPage from '../layouts/Contactpage';
 
@@ -767,6 +768,7 @@ const LayoutComponents = {
   form2 : BasicDetailsForm2,
   form3 : BasicDetailsForm3,
   form4 : BasicDetailsForm4,
+  termsandconditions: Termsandconditions
 };
 // --- End Layout Components Imports ---
 

@@ -89,36 +89,125 @@
 
 
 
+// import React, { useState } from 'react';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// import { NavigationProvider } from './context/NavigationContext';
+// import Sidebar from './components/Sidebar';
+// import Navbar from './components/Navbar';
+// import MainNavbar from './components/MainNavbar'; // Import your MainNavbar
+// import AllPagesView from './components/AllPagesView';
+
+// function App() {
+//   const [sidebarOpen, setSidebarOpen] = useState(true); // Control sidebar toggle
+
+//   return (
+//     <Router>
+//       <NavigationProvider>
+//         <div className="flex flex-col min-h-screen">
+//           {/* TOP: Main Navbar */}
+//           <MainNavbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+
+//           {/* BELOW MAIN NAVBAR: Sidebar + Content */}
+//           <div className="flex flex-1 overflow-hidden">
+//             {sidebarOpen && <Sidebar />}
+
+//             <div className="flex-1 flex flex-col">
+//               <Navbar /> {/* Secondary navbar if needed */}
+              
+//               {/* Main scrollable content area */}
+//               <div className="flex-1 pt-4 overflow-auto">
+//                 <Routes>
+//                   <Route path="*" element={<AllPagesView />} />
+//                 </Routes>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </NavigationProvider>
+//     </Router>
+//   );
+// }
+
+// export default App;
+
+// import React, { useState } from 'react';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// import { NavigationProvider } from './context/NavigationContext';
+// import Sidebar from './components/Sidebar';
+// import Navbar from './components/Navbar';
+// import MainNavbar from './components/MainNavbar';
+// import AllPagesView from './components/AllPagesView';
+
+// import TermsAndConditions from '../src/layouts/Termsandconditions'; // ← import your single-file component
+
+// function App() {
+//   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+//   return (
+//     <Router>
+//       <NavigationProvider>
+//         <div className="flex flex-col min-h-screen">
+//           {/* TOP NAVBAR */}
+//           <MainNavbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+
+//           {/* SIDEBAR + MAIN CONTENT */}
+//           <div className="flex flex-1 overflow-hidden">
+//             {sidebarOpen && <Sidebar />}
+
+//             <div className="flex-1 flex flex-col">
+//               <Navbar />
+
+//               <div className="flex-1 pt-4 overflow-auto">
+//                 <Routes>
+//                   {/* All terms & conditions routes */}
+//                   <Route path="/" element={<TermsAndConditions />} />
+//                   <Route path="/terms" element={<TermsAndConditions />} />
+
+//                   {/* Optional: Catch-all for any other pages */}
+//                   <Route path="*" element={<AllPagesView />} />
+//                 </Routes>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </NavigationProvider>
+//     </Router>
+//   );
+// }
+
+// export default App;
+
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { NavigationProvider } from './context/NavigationContext';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
-import MainNavbar from './components/MainNavbar'; // Import your MainNavbar
+import MainNavbar from './components/MainNavbar';
 import AllPagesView from './components/AllPagesView';
+import TermsAndConditions from '../src/layouts/Termsandconditions';
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(true); // Control sidebar toggle
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <Router>
       <NavigationProvider>
         <div className="flex flex-col min-h-screen">
-          {/* TOP: Main Navbar */}
           <MainNavbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
-          {/* BELOW MAIN NAVBAR: Sidebar + Content */}
           <div className="flex flex-1 overflow-hidden">
             {sidebarOpen && <Sidebar />}
 
             <div className="flex-1 flex flex-col">
-              <Navbar /> {/* Secondary navbar if needed */}
-              
-              {/* Main scrollable content area */}
+              <Navbar />
+
               <div className="flex-1 pt-4 overflow-auto">
                 <Routes>
                   <Route path="*" element={<AllPagesView />} />
+                  <Route path="/terms" element={<TermsAndConditions />} />
                 </Routes>
               </div>
             </div>
@@ -130,3 +219,5 @@ function App() {
 }
 
 export default App;
+
+
