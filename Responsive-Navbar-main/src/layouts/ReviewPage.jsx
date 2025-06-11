@@ -1,396 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FaMoon, FaSun, FaEdit } from 'react-icons/fa';
 
-// Define ALL styles as a JavaScript object
-const componentStyles = {
-    // Body styles: Cannot be applied directly via style prop on component's root div.
-    // These would typically go in an index.css or equivalent, or be dynamically applied to body.
-    // For this 'internal CSS' request, these will be omitted from the style object itself
-    // as they cannot be applied directly to a React element's style prop.
-    // You would need to add a <style> tag in your HTML or apply them to document.body via JS.
-
-    page: {
-        maxWidth: '900px',
-        margin: '20px auto',
-        padding: '0 15px',
-        boxSizing: 'border-box',
-    },
-
-    // Theme Toggle
-    themeToggle: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        marginBottom: '20px',
-    },
-    themeIconBtn: {
-        backgroundColor: 'transparent',
-        border: 'none',
-        cursor: 'pointer',
-        color: '#007bff', /* Primary blue for light mode */
-        fontSize: '1.5rem',
-        padding: '8px',
-        borderRadius: '50%',
-        transition: 'background-color 0.3s ease, color 0.3s ease',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    // Heading
-    headingBox: {
-        textAlign: 'center',
-        marginBottom: '25px',
-    },
-    headingText: {
-        fontSize: '2.8rem',
-        fontWeight: '700',
-        cursor: 'pointer',
-        margin: '0',
-        padding: '5px 10px',
-        display: 'inline-block',
-        transition: 'background-color 0.2s ease, color 0.2s ease',
-        borderRadius: '6px',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    headingInput: {
-        fontSize: '2.8rem',
-        fontWeight: '700',
-        border: '2px solid #007bff',
-        padding: '5px 10px',
-        outline: 'none',
-        margin: '0',
-        display: 'inline-block',
-        width: 'auto',
-        minWidth: '250px',
-        boxSizing: 'border-box',
-        textAlign: 'center',
-        borderRadius: '6px',
-        backgroundColor: '#fff',
-        color: '#333',
-    },
-
-    // Add Review Button and Edit Icon
-    addReviewControls: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '30px',
-        gap: '12px',
-    },
-    addBtn: {
-        backgroundColor: '#007bff', /* Blue in light mode */
-        color: 'white',
-        border: 'none',
-        padding: '12px 25px',
-        borderRadius: '8px',
-        cursor: 'pointer',
-        fontSize: '1.2rem',
-        fontWeight: '600',
-        transition: 'background-color 0.25s ease, transform 0.1s ease',
-        boxShadow: '0 3px 8px rgba(0, 123, 255, 0.2)',
-    },
-    // :hover, :active styles cannot be implemented directly here.
-
-    addBtnInput: {
-        backgroundColor: '#007bff', /* Blue in light mode */
-        color: 'white',
-        border: '2px solid #0056b3',
-        padding: '12px 25px',
-        borderRadius: '8px',
-        fontSize: '1.2rem',
-        fontWeight: '600',
-        width: 'auto',
-        minWidth: '180px',
-        textAlign: 'center',
-        boxSizing: 'border-box',
-        outline: 'none',
-        transition: 'border-color 0.2s ease',
-    },
-    // :focus styles cannot be implemented directly here.
-
-    editIconBtn: {
-        background: 'none',
-        border: 'none',
-        color: '#007bff', /* Primary blue for light mode */
-        cursor: 'pointer',
-        padding: '8px',
-        borderRadius: '50%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '1.2rem',
-        transition: 'background-color 0.2s ease, color 0.2s ease',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    // Modal Styles
-    modalBackdrop: {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 999,
-        // Animations @keyframes fadeIn/slideIn cannot be implemented directly here.
-    },
-    modalBox: {
-        backgroundColor: 'white',
-        padding: '35px 30px',
-        borderRadius: '12px',
-        width: '90%',
-        maxWidth: '480px',
-        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.3)',
-        position: 'relative',
-        boxSizing: 'border-box',
-        // Animations @keyframes fadeIn/slideIn cannot be implemented directly here.
-    },
-
-    modalBoxH2: { // Renamed from original CSS selector `modal-box h2` for direct use
-        margin: '0',
-        marginBottom: '25px',
-        marginTop: '0', // Ensure it's not overriding previous margin
-        fontWeight: '700',
-        fontSize: '2rem',
-        cursor: 'pointer',
-        padding: '4px 8px',
-        display: 'inline-block',
-        transition: 'background-color 0.2s ease, color 0.2s ease',
-        borderRadius: '6px',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    modalTitleInput: {
-        width: '100%',
-        padding: '10px 12px',
-        marginBottom: '25px',
-        border: '2px solid #007bff',
-        borderRadius: '8px',
-        fontSize: '2rem',
-        fontWeight: '700',
-        boxSizing: 'border-box',
-        outline: 'none',
-        backgroundColor: '#fff',
-        color: '#333',
-        transition: 'border-color 0.2s ease',
-    },
-    // :focus styles cannot be implemented directly here.
-
-    // Form Styles
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-    },
-
-    formLabel: { // Renamed from original CSS `form label` selector
-        fontWeight: '600',
-        fontSize: '1.05rem',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-
-    formLabelSpan: { // Renamed from original CSS `form label span` selector
-        cursor: 'pointer',
-        padding: '3px 6px',
-        display: 'inline-block',
-        transition: 'background-color 0.2s ease, color 0.2s ease',
-        borderRadius: '4px',
-        marginBottom: '5px',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    labelInput: {
-        fontSize: '1.05rem',
-        fontWeight: '600',
-        border: '1.5px solid #007bff',
-        padding: '5px 10px',
-        outline: 'none',
-        display: 'inline-block',
-        width: 'auto',
-        minWidth: '120px',
-        marginRight: '8px',
-        boxSizing: 'border-box',
-        backgroundColor: '#fff',
-        color: '#333',
-        borderRadius: '6px',
-        transition: 'border-color 0.2s ease',
-    },
-    // :focus styles cannot be implemented directly here.
-
-    formInput: { // Renamed from `form input` selector
-        padding: '10px 12px',
-        fontSize: '1rem',
-        border: '1.5px solid #ccc',
-        borderRadius: '8px',
-        resize: 'vertical',
-        transition: 'border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease',
-        width: '100%',
-        boxSizing: 'border-box',
-        backgroundColor: '#fff',
-        color: '#333',
-    },
-    formSelect: { // Renamed from `form select` selector
-        padding: '10px 12px',
-        fontSize: '1rem',
-        border: '1.5px solid #ccc',
-        borderRadius: '8px',
-        resize: 'vertical',
-        transition: 'border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease',
-        width: '100%',
-        boxSizing: 'border-box',
-        backgroundColor: '#fff',
-        color: '#333',
-    },
-    formTextarea: { // Renamed from `form textarea` selector
-        padding: '10px 12px',
-        fontSize: '1rem',
-        border: '1.5px solid #ccc',
-        borderRadius: '8px',
-        resize: 'vertical',
-        transition: 'border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease',
-        width: '100%',
-        boxSizing: 'border-box',
-        backgroundColor: '#fff',
-        color: '#333',
-    },
-    // :focus styles cannot be implemented directly here for all these elements.
-
-    formButtons: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        gap: '12px',
-        marginTop: '20px',
-    },
-
-    submitBtn: {
-        padding: '10px 20px',
-        borderRadius: '8px',
-        fontSize: '1rem',
-        cursor: 'pointer',
-        transition: 'background-color 0.25s ease, transform 0.1s ease',
-        border: 'none',
-        fontWeight: '600',
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#28a745', /* Green */
-        color: 'white',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    cancelBtn: {
-        padding: '10px 20px',
-        borderRadius: '8px',
-        fontSize: '1rem',
-        cursor: 'pointer',
-        transition: 'background-color 0.25s ease, transform 0.1s ease',
-        border: 'none',
-        fontWeight: '600',
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#dc3545', /* Red */
-        color: 'white',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    // Reviews List
-    reviews: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        gap: '25px',
-    },
-
-    card: {
-        border: '1px solid #e0e0e0',
-        borderRadius: '10px',
-        padding: '20px 25px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
-        position: 'relative',
-        transition: 'box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease',
-        boxSizing: 'border-box',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    cardH3: { // Renamed from `card h3` selector
-        margin: '0 0 12px 0',
-        fontWeight: '700',
-        fontSize: '1.35rem',
-        color: '#333',
-    },
-
-    cardP: { // Renamed from `card p` selector
-        whiteSpace: 'normal',
-        overflowWrap: 'break-word',
-        maxHeight: '120px',
-        overflow: 'auto',
-        lineHeight: '1.6',
-        color: '#555',
-    },
-
-    stars: {
-        marginBottom: '15px',
-    },
-
-    star: {
-        fontSize: '1.5rem',
-        color: '#ccc',
-        marginRight: '3px',
-    },
-
-    starFilled: {
-        color: '#ffc107',
-    },
-
-    cardActions: {
-        position: 'absolute',
-        top: '15px',
-        right: '15px',
-        display: 'flex',
-        // opacity: 0, // :hover parent-child opacity change not possible here
-        transition: 'opacity 0.3s ease',
-        gap: '10px',
-        zIndex: 1,
-    },
-    // :hover styles cannot be implemented directly here.
-
-    editBtn: {
-        border: 'none',
-        padding: '7px 12px',
-        borderRadius: '6px',
-        fontSize: '0.9rem',
-        cursor: 'pointer',
-        transition: 'background-color 0.2s ease, transform 0.1s ease',
-        fontWeight: '500',
-        backgroundColor: '#ffc107',
-        color: '#333',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    deleteBtn: {
-        border: 'none',
-        padding: '7px 12px',
-        borderRadius: '6px',
-        fontSize: '0.9rem',
-        cursor: 'pointer',
-        transition: 'background-color 0.2s ease, transform 0.1s ease',
-        fontWeight: '500',
-        backgroundColor: '#dc3545',
-        color: 'white',
-    },
-    // :hover styles cannot be implemented directly here.
-
-    // Dark Mode Styles (These styles will NOT work as intended with inline styles
-    // because inline styles override external CSS, and there's no easy way to apply
-    // body.dark rules to individual component elements dynamically without massive
-    // manual conditional styling on every single element.
-    // The conditional styling below for `dynamicThemeStyles` is an attempt, but
-    // it's highly inefficient and verbose, and does not replicate the full power of CSS.)
-};
-
 const ReviewPage = () => {
     const REVIEWS_API_BASE_URL = 'http://localhost:8080/api/reviews';
     const PAGECONTENT_API_BASE_URL = 'http://localhost:8080/api/page-content';
@@ -426,20 +36,10 @@ const ReviewPage = () => {
         return savedTheme === 'dark';
     });
 
-    // This useEffect will still toggle the 'dark' class on the body.
-    // However, since all styles are now inline, 'body.dark' CSS rules
-    // are essentially irrelevant for the component's elements.
-    // Dark mode styles must be applied conditionally directly to each element's style prop.
     useEffect(() => {
         document.body.classList.toggle('dark', darkMode);
         document.body.classList.toggle('light', !darkMode);
         localStorage.setItem('theme', darkMode ? 'dark' : 'light');
-
-        // Manually apply body styles for dark mode as they can't be in componentStyles
-        document.body.style.backgroundColor = darkMode ? '#1a1a1a' : '#f4f7f6';
-        document.body.style.color = darkMode ? '#f0f0f0' : '#333';
-        document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
-
     }, [darkMode]);
 
     const fetchReviews = useCallback(async () => {
@@ -502,6 +102,7 @@ const ReviewPage = () => {
 
             setPageContent(newPageContent);
             console.log('Page content updated successfully:', newPageContent);
+
         } catch (error) {
             console.error('Error updating page content:', error);
             fetchPageContent();
@@ -609,11 +210,7 @@ const ReviewPage = () => {
 
     const renderStars = (count) => {
         return [...Array(5)].map((_, i) => (
-            <span key={i} style={{
-                ...componentStyles.star,
-                // Applying conditional filled style for stars
-                color: (i < count) ? (darkMode ? '#ffd700' : '#ffc107') : (darkMode ? '#555555' : '#ccc')
-            }}>
+            <span key={i} className={i < count ? 'star filled' : 'star'}>
                 ★
             </span>
         ));
@@ -629,6 +226,7 @@ const ReviewPage = () => {
         setEditingModalTitle(false);
         updatePageContent({ modalTitle: pageContent.modalTitle });
     };
+
 
     const handleNameLabelClick = () => setEditingNameLabel(true);
     const handleNameLabelChange = (e) => setPageContent(prev => ({ ...prev, nameLabel: e.target.value }));
@@ -651,54 +249,591 @@ const ReviewPage = () => {
         updatePageContent({ commentLabel: pageContent.commentLabel });
     };
 
-    // --- Dynamic Styles for Dark Mode ---
-    // This is how you'd attempt to handle dark mode with inline styles.
-    // It's very verbose and has limitations (e.g., no hover effects directly).
-    const getDynamicStyle = (baseStyle, darkModeStyle) => {
-        return darkMode ? { ...baseStyle, ...darkModeStyle } : baseStyle;
-    };
-
     return (
-        <div style={componentStyles.page}> {/* Base page styles */}
-            <div style={componentStyles.themeToggle}>
-                <button
-                    onClick={toggleTheme}
-                    style={getDynamicStyle(componentStyles.themeIconBtn, { color: '#f0f0f0' })}
-                >
+        <div className="page">
+            <style>
+                {`
+                body {
+                    margin: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f7f6;
+                    color: #333;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                }
+                
+                .page {
+                    max-width: 900px;
+                    margin: 20px auto;
+                    padding: 0 15px;
+                    box-sizing: border-box;
+                }
+                
+                .theme-toggle {
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-bottom: 20px;
+                }
+                
+                .theme-icon-btn {
+                    background-color: transparent;
+                    border: none;
+                    cursor: pointer;
+                    color: #007bff;
+                    font-size: 1.5rem;
+                    padding: 8px;
+                    border-radius: 50%;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                
+                .theme-icon-btn:hover {
+                    background-color: rgba(0, 123, 255, 0.15);
+                }
+                
+                .heading-box {
+                    text-align: center;
+                    margin-bottom: 25px;
+                }
+                
+                .heading-text {
+                    font-size: 2.8rem;
+                    font-weight: 700;
+                    cursor: pointer;
+                    margin: 0;
+                    padding: 5px 10px;
+                    display: inline-block;
+                    transition: background-color 0.2s ease, color 0.2s ease;
+                    border-radius: 6px;
+                }
+                
+                .heading-text:hover {
+                    background-color: rgba(0, 0, 0, 0.07);
+                }
+                
+                .heading-input {
+                    font-size: 2.8rem;
+                    font-weight: 700;
+                    border: 2px solid #007bff;
+                    padding: 5px 10px;
+                    outline: none;
+                    margin: 0;
+                    display: inline-block;
+                    width: auto;
+                    min-width: 250px;
+                    box-sizing: border-box;
+                    text-align: center;
+                    border-radius: 6px;
+                    background-color: #fff;
+                    color: #333;
+                }
+                
+                .add-review-controls {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: 30px;
+                    gap: 12px;
+                }
+                
+                .add-btn {
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 12px 25px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    transition: background-color 0.25s ease, transform 0.1s ease;
+                    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.2);
+                }
+                
+                .add-btn:hover {
+                    background-color: #0056b3;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 12px rgba(0, 123, 255, 0.3);
+                }
+                
+                .add-btn:active {
+                    background-color: #003f7f;
+                    transform: translateY(0);
+                    box-shadow: 0 1px 4px rgba(0, 123, 255, 0.2);
+                }
+                
+                .add-btn-input {
+                    background-color: #007bff;
+                    color: white;
+                    border: 2px solid #0056b3;
+                    padding: 12px 25px;
+                    border-radius: 8px;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    width: auto;
+                    min-width: 180px;
+                    text-align: center;
+                    box-sizing: border-box;
+                    outline: none;
+                    transition: border-color 0.2s ease;
+                }
+                
+                .add-btn-input:focus {
+                    border-color: #0056b3;
+                    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
+                }
+                
+                .edit-icon-btn {
+                    background: none;
+                    border: none;
+                    color: #007bff;
+                    cursor: pointer;
+                    padding: 8px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.2rem;
+                    transition: background-color 0.2s ease, color 0.2s ease;
+                }
+                
+                .edit-icon-btn:hover {
+                    background-color: rgba(0, 123, 255, 0.15);
+                    color: #0056b3;
+                }
+                
+                .modal-backdrop {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.6);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 999;
+                    animation: fadeIn 0.2s ease-out;
+                }
+                
+                .modal-box {
+                    background-color: white;
+                    padding: 35px 30px;
+                    border-radius: 12px;
+                    width: 90%;
+                    max-width: 480px;
+                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+                    position: relative;
+                    box-sizing: border-box;
+                    animation: slideIn 0.3s ease-out;
+                }
+                
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                
+                @keyframes slideIn {
+                    from { transform: translateY(-50px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+                
+                
+                .modal-box h2 {
+                    margin-top: 0;
+                    margin-bottom: 25px;
+                    font-weight: 700;
+                    font-size: 2rem;
+                    cursor: pointer;
+                    padding: 4px 8px;
+                    display: inline-block;
+                    transition: background-color 0.2s ease, color 0.2s ease;
+                    border-radius: 6px;
+                }
+                
+                .modal-box h2:hover {
+                    background-color: rgba(0, 0, 0, 0.05);
+                }
+                
+                .modal-title-input {
+                    width: 100%;
+                    padding: 10px 12px;
+                    margin-bottom: 25px;
+                    border: 2px solid #007bff;
+                    border-radius: 8px;
+                    font-size: 2rem;
+                    font-weight: 700;
+                    box-sizing: border-box;
+                    outline: none;
+                    background-color: #fff;
+                    color: #333;
+                    transition: border-color 0.2s ease;
+                }
+                
+                .form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                }
+                
+                .form label {
+                    font-weight: 600;
+                    font-size: 1.05rem;
+                    display: flex;
+                    flex-direction: column;
+                }
+                
+                .form label span {
+                    cursor: pointer;
+                    padding: 3px 6px;
+                    display: inline-block;
+                    transition: background-color 0.2s ease, color 0.2s ease;
+                    border-radius: 4px;
+                    margin-bottom: 5px;
+                }
+                
+                .form label span:hover {
+                    background-color: rgba(0, 0, 0, 0.05);
+                }
+                
+                .label-input {
+                    font-size: 1.05rem;
+                    font-weight: 600;
+                    border: 1.5px solid #007bff;
+                    padding: 5px 10px;
+                    outline: none;
+                    display: inline-block;
+                    width: auto;
+                    min-width: 120px;
+                    margin-right: 8px;
+                    box-sizing: border-box;
+                    background-color: #fff;
+                    color: #333;
+                    border-radius: 6px;
+                    transition: border-color 0.2s ease;
+                }
+                
+                .form input,
+                .form select,
+                .form textarea {
+                    padding: 10px 12px;
+                    font-size: 1rem;
+                    border: 1.5px solid #ccc;
+                    border-radius: 8px;
+                    resize: vertical;
+                    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+                    width: 100%;
+                    box-sizing: border-box;
+                    background-color: #fff;
+                    color: #333;
+                }
+                
+                .form input:focus,
+                .form select:focus,
+                .form textarea:focus,
+                .modal-title-input:focus,
+                .label-input:focus {
+                    border-color: #007bff;
+                    outline: none;
+                    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+                }
+                
+                .form-buttons {
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 12px;
+                    margin-top: 20px;
+                }
+                
+                .submit-btn,
+                .cancel-btn {
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    transition: background-color 0.25s ease, transform 0.1s ease;
+                    border: none;
+                    font-weight: 600;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                
+                .submit-btn {
+                    background-color: #28a745;
+                    color: white;
+                }
+                
+                .submit-btn:hover {
+                    background-color: #218838;
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                }
+                
+                .cancel-btn {
+                    background-color: #dc3545;
+                    color: white;
+                }
+                
+                .cancel-btn:hover {
+                    background-color: #c82333;
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                }
+                
+                .reviews {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                    gap: 25px;
+                }
+                
+                .card {
+                    border: 1px solid #e0e0e0;
+                    border-radius: 10px;
+                    padding: 20px 25px;
+                    background-color: #ffffff;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+                    position: relative;
+                    transition: box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+                    box-sizing: border-box;
+                }
+                
+                .card:hover {
+                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+                }
+                
+                .card h3 {
+                    margin: 0 0 12px 0;
+                    font-weight: 700;
+                    font-size: 1.35rem;
+                    color: #333;
+                }
+                
+                .card p {
+                    white-space: normal;
+                    overflow-wrap: break-word;
+                    max-height: 120px;
+                    overflow: auto;
+                    line-height: 1.6;
+                    color: #555;
+                }
+                
+                .stars {
+                    margin-bottom: 15px;
+                }
+                
+                .star {
+                    font-size: 1.5rem;
+                    color: #ccc;
+                    margin-right: 3px;
+                }
+                
+                .star.filled {
+                    color: #ffc107;
+                }
+                
+                .card-actions {
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    display: flex;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    gap: 10px;
+                    z-index: 1;
+                }
+                
+                .card:hover .card-actions {
+                    opacity: 1;
+                }
+                
+                .edit-btn,
+                .delete-btn {
+                    border: none;
+                    padding: 7px 12px;
+                    border-radius: 6px;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    transition: background-color 0.2s ease, transform 0.1s ease;
+                    font-weight: 500;
+                }
+                
+                .edit-btn {
+                    background-color: #ffc107;
+                    color: #333;
+                }
+                
+                .edit-btn:hover {
+                    background-color: #e0a800;
+                    transform: translateY(-1px);
+                }
+                
+                .delete-btn {
+                    background-color: #dc3545;
+                    color: white;
+                }
+                
+                .delete-btn:hover {
+                    background-color: #c82333;
+                    transform: translateY(-1px);
+                }
+                
+                body.dark {
+                    background-color: #1a1a1a;
+                    color: #f0f0f0;
+                }
+                
+                body.dark .page,
+                body.dark .modal-box {
+                    background-color: #1a1a1a;
+                    color: #f0f0f0;
+                    border-color: #333;
+                    box-shadow: none;
+                }
+                
+                body.dark .card {
+                    background-color: #2a2a2a;
+                    color: #f0f0f0;
+                    border-color: #444;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                }
+                
+                body.dark .heading-text:hover,
+                body.dark .modal-box h2:hover,
+                body.dark .form label span:hover {
+                    background-color: rgba(255, 255, 255, 0.05);
+                }
+                
+                body.dark .heading-input,
+                body.dark input,
+                body.dark select,
+                body.dark textarea,
+                body.dark .modal-title-input,
+                body.dark .label-input {
+                    background-color: #333333;
+                    color: #f0f0f0;
+                    border: 1.5px solid #555555;
+                }
+                
+                body.dark input:focus,
+                body.dark select:focus,
+                body.dark textarea:focus,
+                body.dark .modal-title-input:focus,
+                body.dark .label-input:focus,
+                body.dark .heading-input:focus {
+                    border-color: #007bff;
+                    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+                }
+                
+                body.dark .star {
+                    color: #555555;
+                }
+                
+                body.dark .star.filled {
+                    color: #ffd700;
+                }
+                
+                body.dark .theme-icon-btn {
+                    color: #f0f0f0;
+                }
+                
+                body.dark .theme-icon-btn:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                body.dark .add-btn {
+                    background-color: #007bff;
+                    color: white;
+                    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+                }
+                
+                body.dark .add-btn:hover {
+                    background-color: #0056b3;
+                }
+                
+                body.dark .add-btn-input {
+                    background-color: #007bff;
+                    color: white;
+                    border-color: #0056b3;
+                }
+                
+                body.dark .add-btn-input:focus {
+                    border-color: #0056b3;
+                    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4);
+                }
+                
+                body.dark .edit-icon-btn {
+                    color: #f0f0f0;
+                }
+                
+                body.dark .edit-icon-btn:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    color: white;
+                }
+                
+                body.dark .submit-btn {
+                    background-color: #28a745;
+                    color: white;
+                }
+                
+                body.dark .submit-btn:hover {
+                    background-color: #218838;
+                }
+                
+                body.dark .cancel-btn {
+                    background-color: #dc3545;
+                    color: white;
+                }
+                
+                body.dark .cancel-btn:hover {
+                    background-color: #c82333;
+                }
+                
+                body.dark .edit-btn {
+                    background-color: #ffc107;
+                    color: #333;
+                }
+                
+                body.dark .edit-btn:hover {
+                    background-color: #e0a800;
+                }
+                
+                body.dark .delete-btn {
+                    background-color: #dc3545;
+                    color: white;
+                }
+                
+                body.dark .delete-btn:hover {
+                    background-color: #c82333;
+                }
+                `}
+            </style>
+            <div className="theme-toggle">
+                <button onClick={toggleTheme} className="theme-icon-btn">
                     {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
                 </button>
             </div>
 
-            <div style={componentStyles.headingBox}>
+            <div className="heading-box">
                 {editingHeading ? (
                     <input
                         type="text"
-                        style={getDynamicStyle(componentStyles.headingInput, {
-                            backgroundColor: '#333333',
-                            color: '#f0f0f0',
-                            borderColor: '#007bff' // Assuming focus border remains blue in dark mode
-                        })}
+                        className="heading-input"
                         value={pageContent.mainHeading}
                         onChange={handleHeadingChange}
                         onBlur={handleHeadingBlur}
                         autoFocus
                     />
                 ) : (
-                    <h1 style={getDynamicStyle(componentStyles.headingText, { color: '#f0f0f0' })} onClick={handleHeadingClick}>
+                    <h1 className="heading-text" onClick={handleHeadingClick}>
                         {pageContent.mainHeading}
                     </h1>
                 )}
             </div>
 
-            <div style={componentStyles.addReviewControls}>
+            <div className="add-review-controls">
                 {editingAddReviewBtn ? (
                     <input
                         type="text"
-                        style={getDynamicStyle(componentStyles.addBtnInput, {
-                            backgroundColor: '#007bff', // Stays blue
-                            color: 'white',
-                            borderColor: '#0056b3',
-                        })}
+                        className="add-btn-input"
                         value={pageContent.addReviewButtonText}
                         onChange={handleAddReviewBtnChange}
                         onBlur={handleAddReviewBtnBlur}
@@ -706,99 +841,73 @@ const ReviewPage = () => {
                     />
                 ) : (
                     <>
-                        <button style={getDynamicStyle(componentStyles.addBtn, { backgroundColor: '#007bff', color: 'white' })} onClick={openModal}>
+                        <button className="add-btn" onClick={openModal}>
                             {pageContent.addReviewButtonText}
                         </button>
-                        <button style={getDynamicStyle(componentStyles.editIconBtn, { color: '#f0f0f0' })} onClick={handleAddReviewBtnClick} aria-label="Edit Add Review Button Text">
+                        <button className="edit-icon-btn" onClick={handleAddReviewBtnClick} aria-label="Edit Add Review Button Text">
                             <FaEdit size={16} />
                         </button>
                     </>
                 )}
             </div>
 
+
             {showModal && (
-                <div style={componentStyles.modalBackdrop} onClick={closeModal}>
-                    <div style={getDynamicStyle(componentStyles.modalBox, {
-                        backgroundColor: '#1a1a1a',
-                        color: '#f0f0f0',
-                        boxShadow: 'none',
-                        borderColor: '#333' // If there was a border
-                    })} onClick={(e) => e.stopPropagation()}>
+                <div className="modal-backdrop" onClick={closeModal}>
+                    <div className="modal-box" onClick={(e) => e.stopPropagation()}>
                         {editingModalTitle ? (
                             <input
                                 type="text"
-                                style={getDynamicStyle(componentStyles.modalTitleInput, {
-                                    backgroundColor: '#333333',
-                                    color: '#f0f0f0',
-                                    borderColor: '#007bff'
-                                })}
-                                value={editingId ? 'Edit Review' : pageContent.modalTitle}
+                                className="modal-title-input"
+                                value={pageContent.modalTitle}
                                 onChange={handleModalTitleChange}
                                 onBlur={handleModalTitleBlur}
                                 autoFocus
                             />
                         ) : (
-                            <h2 style={getDynamicStyle(componentStyles.modalBoxH2, { color: '#f0f0f0' })} onClick={handleModalTitleClick}>
+                            <h2 onClick={handleModalTitleClick}>
                                 {editingId ? 'Edit Review' : pageContent.modalTitle}
                             </h2>
                         )}
 
-                        <form style={componentStyles.form} onSubmit={handleSubmit}>
-                            <label style={componentStyles.formLabel}>
+                        <form className="form" onSubmit={handleSubmit}>
+                            <label>
                                 {editingNameLabel ? (
                                     <input
                                         type="text"
-                                        style={getDynamicStyle(componentStyles.labelInput, {
-                                            backgroundColor: '#333333',
-                                            color: '#f0f0f0',
-                                            borderColor: '#007bff'
-                                        })}
+                                        className="label-input"
                                         value={pageContent.nameLabel}
                                         onChange={handleNameLabelChange}
                                         onBlur={handleNameLabelBlur}
                                         autoFocus
                                     />
                                 ) : (
-                                    <span style={getDynamicStyle(componentStyles.formLabelSpan, { color: '#f0f0f0' })} onClick={handleNameLabelClick}>{pageContent.nameLabel}</span>
+                                    <span onClick={handleNameLabelClick}>{pageContent.nameLabel}</span>
                                 )}
                                 <input
                                     type="text"
                                     name="name"
-                                    style={getDynamicStyle(componentStyles.formInput, {
-                                        backgroundColor: '#333333',
-                                        color: '#f0f0f0',
-                                        borderColor: '#555555'
-                                    })}
                                     value={formData.name}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </label>
 
-                            <label style={componentStyles.formLabel}>
+                            <label>
                                 {editingRatingLabel ? (
                                     <input
                                         type="text"
-                                        style={getDynamicStyle(componentStyles.labelInput, {
-                                            backgroundColor: '#333333',
-                                            color: '#f0f0f0',
-                                            borderColor: '#007bff'
-                                        })}
+                                        className="label-input"
                                         value={pageContent.ratingLabel}
                                         onChange={handleRatingLabelChange}
                                         onBlur={handleRatingLabelBlur}
                                         autoFocus
                                     />
                                 ) : (
-                                    <span style={getDynamicStyle(componentStyles.formLabelSpan, { color: '#f0f0f0' })} onClick={handleRatingLabelClick}>{pageContent.ratingLabel}</span>
+                                    <span onClick={handleRatingLabelClick}>{pageContent.ratingLabel}</span>
                                 )}
                                 <select
                                     name="rating"
-                                    style={getDynamicStyle(componentStyles.formSelect, {
-                                        backgroundColor: '#333333',
-                                        color: '#f0f0f0',
-                                        borderColor: '#555555'
-                                    })}
                                     value={formData.rating}
                                     onChange={handleInputChange}
                                     required
@@ -814,41 +923,32 @@ const ReviewPage = () => {
                                 </select>
                             </label>
 
-                            <label style={componentStyles.formLabel}>
+                            <label>
                                 {editingCommentLabel ? (
                                     <input
                                         type="text"
-                                        style={getDynamicStyle(componentStyles.labelInput, {
-                                            backgroundColor: '#333333',
-                                            color: '#f0f0f0',
-                                            borderColor: '#007bff'
-                                        })}
+                                        className="label-input"
                                         value={pageContent.commentLabel}
                                         onChange={handleCommentLabelChange}
                                         onBlur={handleCommentLabelBlur}
                                         autoFocus
                                     />
                                 ) : (
-                                    <span style={getDynamicStyle(componentStyles.formLabelSpan, { color: '#f0f0f0' })} onClick={handleCommentLabelClick}>{pageContent.commentLabel}</span>
+                                    <span onClick={handleCommentLabelClick}>{pageContent.commentLabel}</span>
                                 )}
                                 <textarea
                                     name="comment"
-                                    style={getDynamicStyle(componentStyles.formTextarea, {
-                                        backgroundColor: '#333333',
-                                        color: '#f0f0f0',
-                                        borderColor: '#555555'
-                                    })}
                                     value={formData.comment}
                                     onChange={handleInputChange}
                                     required
                                 />
                             </label>
 
-                            <div style={componentStyles.formButtons}>
-                                <button type="submit" style={getDynamicStyle(componentStyles.submitBtn, { backgroundColor: '#28a745', color: 'white' })}>
+                            <div className="form-buttons">
+                                <button type="submit" className="submit-btn">
                                     {editingId ? 'Update Review' : 'Submit Review'}
                                 </button>
-                                <button type="button" style={getDynamicStyle(componentStyles.cancelBtn, { backgroundColor: '#dc3545', color: 'white' })} onClick={closeModal}>
+                                <button type="button" className="cancel-btn" onClick={closeModal}>
                                     Cancel
                                 </button>
                             </div>
@@ -857,28 +957,20 @@ const ReviewPage = () => {
                 </div>
             )}
 
-            <div style={componentStyles.reviews}>
+            <div className="reviews">
                 {reviews.map((review) => (
-                    <div key={review.id}
-                        style={getDynamicStyle(componentStyles.card, {
-                            backgroundColor: '#2a2a2a',
-                            color: '#f0f0f0',
-                            borderColor: '#444',
-                            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
-                        })}
-                    >
-                        {/* Note: card-actions opacity change on card:hover cannot be done with inline styles. */}
-                        <div style={componentStyles.cardActions}>
-                            <button style={getDynamicStyle(componentStyles.editBtn, { backgroundColor: '#ffc107', color: '#333' })} onClick={() => handleEdit(review)}>
+                    <div className="card" key={review.id}>
+                        <div className="card-actions">
+                            <button onClick={() => handleEdit(review)} className="edit-btn">
                                 Edit
                             </button>
-                            <button style={getDynamicStyle(componentStyles.deleteBtn, { backgroundColor: '#dc3545', color: 'white' })} onClick={() => handleDelete(review.id)}>
+                            <button onClick={() => handleDelete(review.id)} className="delete-btn">
                                 Delete
                             </button>
                         </div>
-                        <h3 style={getDynamicStyle(componentStyles.cardH3, { color: '#f0f0f0' })}>{review.name}</h3>
-                        <div style={componentStyles.stars}>{renderStars(review.rating)}</div>
-                        <p style={getDynamicStyle(componentStyles.cardP, { color: '#f0f0f0' })}>{review.comment}</p>
+                        <h3>{review.name}</h3>
+                        <div className="stars">{renderStars(review.rating)}</div>
+                        <p>{review.comment}</p>
                     </div>
                 ))}
             </div>
