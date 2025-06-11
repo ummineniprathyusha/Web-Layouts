@@ -741,6 +741,7 @@ import {
   FullPageListLayout,
   FullPageGridLayout,
   Contactpage,
+  ReviewPage
 } from '../layouts';
 import ContactPage from '../layouts/Contactpage';
 
@@ -757,7 +758,8 @@ const LayoutComponents = {
   cta: CtaLayout,
   fullList:FullPageListLayout,
   fullPage: FullPageGridLayout,
-  contact: ContactPage
+  contact: ContactPage,
+  review : ReviewPage
 };
 // --- End Layout Components Imports ---
 
@@ -789,6 +791,7 @@ function Sidebar() {
     setActivePageId,
     selectedLayouts,
     setLayoutForPage,
+
     // pageContent // We don't need pageContent in the sidebar for image-only previews
   } = useNavigation();
 
