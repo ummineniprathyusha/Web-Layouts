@@ -11,11 +11,13 @@ import {
   MissionVisionLayout,
   TeamLayout,
   CtaLayout,
-  ServiceCard
+  ServiceCard,
+  Contactpage
 } from '../layouts';
 
 import FullPageListLayout from '../layouts/FullPageListLayout';
 import FullPageGridLayout from '../layouts/FullPageGridLayout';
+import ContactPage from '../layouts/Contactpage';
 
 const LayoutComponents = {
   grid: GridLayout,
@@ -29,6 +31,7 @@ const LayoutComponents = {
   cta: CtaLayout,
   fullList: FullPageListLayout,
   fullPage: FullPageGridLayout,
+  contact: ContactPage
 };
 
 const PageCard = React.forwardRef(

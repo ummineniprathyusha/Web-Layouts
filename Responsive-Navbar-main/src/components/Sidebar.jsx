@@ -739,8 +739,10 @@ import {
   TeamLayout,
   CtaLayout,
   FullPageListLayout,
-  FullPageGridLayout
+  FullPageGridLayout,
+  Contactpage,
 } from '../layouts';
+import ContactPage from '../layouts/Contactpage';
 
 
 const LayoutComponents = {
@@ -754,7 +756,8 @@ const LayoutComponents = {
   team: TeamLayout,
   cta: CtaLayout,
   fullList:FullPageListLayout,
-  fullPage: FullPageGridLayout
+  fullPage: FullPageGridLayout,
+  contact: ContactPage
 };
 // --- End Layout Components Imports ---
 
