@@ -741,6 +741,10 @@ import {
   FullPageListLayout,
   FullPageGridLayout,
   Contactpage,
+  BasicDetailsForm,
+  BasicDetailsForm2,
+  BasicDetailsForm3,
+  BasicDetailsForm4,
 } from '../layouts';
 import ContactPage from '../layouts/Contactpage';
 
@@ -758,7 +762,11 @@ const LayoutComponents = {
   cta: CtaLayout,
   fullList:FullPageListLayout,
   fullPage: FullPageGridLayout,
-  contact: ContactPage
+  contact: Contactpage,
+  form1 : BasicDetailsForm,
+  form2 : BasicDetailsForm2,
+  form3 : BasicDetailsForm3,
+  form4 : BasicDetailsForm4,
 };
 // --- End Layout Components Imports ---
 
