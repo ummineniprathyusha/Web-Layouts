@@ -13,7 +13,11 @@ import {
   CtaLayout,
   ServiceCard,
   Contactpage,
-  ReviewPage
+  ReviewPage,
+  BasicDetailsForm,
+  BasicDetailsForm2,
+  BasicDetailsForm3,
+  BasicDetailsForm4,
 } from '../layouts';
 
 import FullPageListLayout from '../layouts/FullPageListLayout';
@@ -33,7 +37,11 @@ const LayoutComponents = {
   fullList: FullPageListLayout,
   fullPage: FullPageGridLayout,
   contact: ContactPage,
-  review: ReviewPage
+  review: ReviewPage,
+  form1 : BasicDetailsForm,
+  form2 : BasicDetailsForm2,
+  form3 : BasicDetailsForm3,
+  form4 : BasicDetailsForm4,
 };
 
 const PageCard = React.forwardRef(
