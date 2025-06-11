@@ -15,6 +15,9 @@ import {
   Contactpage,
   ReviewPage,
   BasicDetailsForm,
+  BasicDetailsForm2,
+  BasicDetailsForm3,
+  BasicDetailsForm4,
 } from '../layouts';
 
 import FullPageListLayout from '../layouts/FullPageListLayout';
@@ -36,6 +39,9 @@ const LayoutComponents = {
   contact: ContactPage,
   review: ReviewPage,
   form1 : BasicDetailsForm,
+  form2 : BasicDetailsForm2,
+  form3 : BasicDetailsForm3,
+  form4 : BasicDetailsForm4,
 };
 
 const PageCard = React.forwardRef(

@@ -743,6 +743,9 @@ import {
   Contactpage,
   ReviewPage,
   BasicDetailsForm,
+  BasicDetailsForm2,
+  BasicDetailsForm3,
+  BasicDetailsForm4,
 } from '../layouts';
 import ContactPage from '../layouts/Contactpage';
 
@@ -762,6 +765,9 @@ const LayoutComponents = {
   contact: ContactPage,
   review : ReviewPage,
   form1 : BasicDetailsForm,
+  form2 : BasicDetailsForm2,
+  form3 : BasicDetailsForm3,
+  form4 : BasicDetailsForm4,
 };
 // --- End Layout Components Imports ---
 
