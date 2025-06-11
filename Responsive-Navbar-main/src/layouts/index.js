@@ -17,3 +17,4 @@ export { default as CtaLayout } from './CtaLayout';
 export { default as FullPageListLayout } from './FullPageListLayout';
 export { default as FullPageGridLayout } from './FullPageGridLayout';
 export {default as ReviewPage} from "./ReviewPage";
+export { default as BasicDetailsForm } from "./form1";
