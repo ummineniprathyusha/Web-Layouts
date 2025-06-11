@@ -18,8 +18,6 @@ const ContactPage = ({ title, setTitle }) => {
     message: '',
   });
 
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const handleTitleInput = () => {
     const newTitle = titleRef.current.innerText;
     setTitle(newTitle);
@@ -93,50 +91,6 @@ const ContactPage = ({ title, setTitle }) => {
         body {
           margin: 0;
           font-family: Arial, sans-serif;
-        }
-        .navbar {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background-color: #222;
-          padding: 10px 20px;
-          color: white;
-        }
-        .navbar-logo {
-          font-size: 1.5rem;
-          font-weight: bold;
-        }
-        .navbar-toggle {
-          font-size: 1.5rem;
-          background: none;
-          color: white;
-          border: none;
-          display: none;
-          cursor: pointer;
-        }
-        .navbar-menu {
-          display: flex;
-          gap: 15px;
-          list-style: none;
-        }
-        .navbar-menu li a {
-          color: white;
-          text-decoration: none;
-        }
-        @media (max-width: 768px) {
-          .navbar-toggle {
-            display: block;
-          }
-          .navbar-menu {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            background-color: #333;
-            padding: 10px;
-          }
-          .navbar-menu.open {
-            display: flex;
-          }
         }
         .contact-section {
           padding: 2rem;
@@ -219,17 +173,6 @@ const ContactPage = ({ title, setTitle }) => {
         }
       `}</style>
 
-      <nav className="navbar">
-        <div className="navbar-logo">MySite</div>
-        <button className="navbar-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-          ☰
-        </button>
-        <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-          <li><a href="/">Home</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-
       <section id="contact" className="contact-section">
         <div className="contact-title-wrapper">
           <h1
@@ -250,7 +193,7 @@ const ContactPage = ({ title, setTitle }) => {
               {editing ? (
                 <input name="location" value={tempInfo.location} onChange={handleInfoChange} />
               ) : (
-                <p>{info.location}</p>
+                <p>📍 {info.location}</p>
               )}
             </div>
             <div className="info-item">
@@ -309,14 +252,3 @@ const ContactPage = ({ title, setTitle }) => {
 };
 
 export default ContactPage;
-
-
-// import React, { useState } from 'react';
-// import ContactPage from './ContactPage';
-
-// function App() {
-//   const [title, setTitle] = useState('');
-//   return <ContactPage title={title} setTitle={setTitle} />;
-// }
-
-// export default App;
