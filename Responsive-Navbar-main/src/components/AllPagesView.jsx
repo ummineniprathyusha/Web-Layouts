@@ -12,8 +12,7 @@ import {
   TeamLayout,
   CtaLayout,
   ServiceCard,
-  Contactpage,
-  TermsAndConditions
+  Contactpage
 } from '../layouts';
 
 import FullPageListLayout from '../layouts/FullPageListLayout';
@@ -32,8 +31,7 @@ const LayoutComponents = {
   cta: CtaLayout,
   fullList: FullPageListLayout,
   fullPage: FullPageGridLayout,
-  contact: ContactPage,
-  termsAndconditions: TermsAndConditions
+  contact: ContactPage
 };
 
 const PageCard = React.forwardRef(
