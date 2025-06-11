@@ -741,8 +741,10 @@ import {
   FullPageListLayout,
   FullPageGridLayout,
   Contactpage,
+  TermsAndConditions,
 } from '../layouts';
 import ContactPage from '../layouts/Contactpage';
+
 
 
 const LayoutComponents = {
@@ -757,7 +759,9 @@ const LayoutComponents = {
   cta: CtaLayout,
   fullList:FullPageListLayout,
   fullPage: FullPageGridLayout,
-  contact: ContactPage
+  contact: ContactPage,
+  termsAndConditions: TermsAndConditions
+
 };
 // --- End Layout Components Imports ---
 
