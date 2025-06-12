@@ -7,7 +7,7 @@ export { default as TestimonialLayout1} from './TestimonialLayout1';
 export { default as ServiceCard} from './ServiceCard';
 export { default as Contactpage} from './Contactpage';
 export { default as Termsandconditions } from './Termsandconditions';
-
+export { default as  PrivacyPolicy } from './PrivacyPolicy';
 
 
 

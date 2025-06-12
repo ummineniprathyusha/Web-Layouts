@@ -746,10 +746,9 @@ import {
   BasicDetailsForm3,
   BasicDetailsForm4,
   Termsandconditions,
+  PrivacyPolicy,
 } from '../layouts';
 import ContactPage from '../layouts/Contactpage';
-
-
 
 const LayoutComponents = {
   grid: GridLayout,
@@ -768,7 +767,8 @@ const LayoutComponents = {
   form2 : BasicDetailsForm2,
   form3 : BasicDetailsForm3,
   form4 : BasicDetailsForm4,
-  termsandconditions: Termsandconditions
+  termsandconditions: Termsandconditions,
+  privacypolicy: PrivacyPolicy,
 };
 // --- End Layout Components Imports ---
 

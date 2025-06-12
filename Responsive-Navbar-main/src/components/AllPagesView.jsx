@@ -17,7 +17,8 @@ import {
   BasicDetailsForm2,
   BasicDetailsForm3,
   BasicDetailsForm4,
-  Termsandconditions
+  Termsandconditions,
+  PrivacyPolicy,
 } from '../layouts';
 
 import FullPageListLayout from '../layouts/FullPageListLayout';
@@ -41,7 +42,8 @@ const LayoutComponents = {
   form2 : BasicDetailsForm2,
   form3 : BasicDetailsForm3,
   form4 : BasicDetailsForm4,
-  termsandconditions: Termsandconditions
+  termsandconditions: Termsandconditions,
+  privacypolicy: PrivacyPolicy,
 };
 
 const PageCard = React.forwardRef(
