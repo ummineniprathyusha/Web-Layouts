@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-// Section component for each editable policy block
-const Section = ({ title, initialContent }) => {
+// Section component with editable title and content
+const Section = ({ initialTitle, initialContent }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
 
   const handleSave = () => setIsEditing(false);
@@ -10,12 +11,13 @@ const Section = ({ title, initialContent }) => {
 
   return (
     <section className="mb-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition duration-300">
-      <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">
-        {title}
-      </h2>
-
       {isEditing ? (
         <>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full mb-3 p-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -31,6 +33,12 @@ const Section = ({ title, initialContent }) => {
         </>
       ) : (
         <>
+          <h2
+            className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 cursor-pointer"
+            onClick={handleEdit}
+          >
+            {title}
+          </h2>
           <p className="text-gray-700 dark:text-gray-300">{content}</p>
           <button
             onClick={handleEdit}
@@ -124,7 +132,7 @@ const PrivacyPolicy = () => {
       {sections.map((section, index) => (
         <Section
           key={index}
-          title={section.title}
+          initialTitle={section.title}
           initialContent={section.content}
         />
       ))}
