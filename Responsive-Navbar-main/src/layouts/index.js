@@ -8,6 +8,7 @@ export { default as ServiceCard} from './ServiceCard';
 export { default as Contactpage} from './Contactpage';
 export { default as Termsandconditions } from './Termsandconditions';
 export { default as  PrivacyPolicy } from './PrivacyPolicy';
+export { default as page} from './page';
 
 
 
